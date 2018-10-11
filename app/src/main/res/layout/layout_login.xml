@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_nationality"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/china"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:text="@string/China"
+                android:textColor="@color/login_text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center_horizontal"
+                android:text="W e l c o m e"
+                android:textColor="@color/login_text"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/everyone"
+                android:textColor="@color/login_text"
+                android:textSize="@dimen/sp_16" />
+
+
+            <EditText
+                android:id="@+id/et_login_account"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_80"
+                android:background="@drawable/shape_login_account_bg"
+                android:drawableLeft="@drawable/account"
+                android:hint="@string/login_account_type"
+                android:textColorHint="@color/login_text"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:id="@+id/et_login_password"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/shape_login_account_bg"
+                android:drawableLeft="@drawable/password"
+                android:hint="@string/login_password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/login_text"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_login"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_60"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/login_bg"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_150"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_100"
+            android:src="@drawable/ice_cream" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

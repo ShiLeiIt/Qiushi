@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">QiuShiIceCream</string>
+    <string name="China">中国</string>
+    <string name="English">英国</string>
+    <string name="everyone">人 人 都 能 成 为 冰 淇 淋 大 师</string>
+    <string name="login_account_type">手机号/邮箱/账号</string>
+    <string name="login_password">密码</string>
+    <string name="login">登 录</string>
+    <string name="choose_specifications">选择规格</string>
+    <string name="choose_number">选择数量</string>
+    <string name="payment">付款</string>
+    <string name="click_on_the_create">点击制作</string>
+    <string name="start_making">开始制作</string>
+    <string name="making_finish">制作完成</string>
 </resources>

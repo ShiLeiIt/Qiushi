@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="url">
-        <item>https://s1.ax1x.com/2018/09/10/iijb6I.jpg</item>
-        <item>https://s1.ax1x.com/2018/09/10/iijb6I.jpg</item>
-        <item>https://s1.ax1x.com/2018/09/10/iijb6I.jpg</item>
-        <item>https://s1.ax1x.com/2018/09/10/iijb6I.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaA9H.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaA9H.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaA9H.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaA9H.jpg</item>
+    </array>
+    <array name="url1">
+        <item>https://s1.ax1x.com/2018/10/10/iYaZjI.md.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaZjI.md.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaZjI.md.jpg</item>
+        <item>https://s1.ax1x.com/2018/10/10/iYaZjI.md.jpg</item>
     </array>
 </resources>
