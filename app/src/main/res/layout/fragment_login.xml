@@ -87,7 +87,7 @@
             android:layout_height="@dimen/dp_150"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_100"
+            android:layout_marginRight="@dimen/dp_60"
             android:src="@drawable/ice_cream" />
     </RelativeLayout>
 

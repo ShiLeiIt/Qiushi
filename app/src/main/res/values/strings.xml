@@ -12,4 +12,29 @@
     <string name="click_on_the_create">点击制作</string>
     <string name="start_making">开始制作</string>
     <string name="making_finish">制作完成</string>
+    <string name="please_select_like">请点击选择您所喜欢的筒</string>
+    <string name="favourable_activity">优惠活动：尝新价10元一个</string>
+    <string name="seclect_number">请选择数量</string>
+    <string name="amount_of_total">本次应付总计</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="original_price">原价：¥</string>
+    <string name="please_pay_by_scanning_code">请扫码付款</string>
+    <string name="please_select_payment_software_one">请先选择付款软件,再打开相应手机里的客户端,</string>
+    <string name="please_select_payment_software_two">开启扫一扫功能并扫描！</string>
+    <string name="please_select_payment_software_three">屏幕上二维码进行付款。</string>
+    <string name="ali_pay">支付宝</string>
+    <string name="wechat">微信</string>
+    <string name="discharge_number">出料数：1</string>
+    <string name="remainder">余数：2</string>
+
+    <string name="please_do_not_go_away">请不要走开</string>
+    <string name="take_you_selected_tap">拿起您选择的底托</string>
+    <string name="aligning_outlet">对准出料口</string>
+    <string name="slowly_rotating">慢慢旋转.....</string>
+
+    <string name="start_making_in">开始制作中.....</string>
+    <string name="surprise_is_waiting_for_you">惊喜在等待您</string>
+
+
 </resources>

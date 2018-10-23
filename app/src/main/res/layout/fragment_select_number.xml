@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/buy_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_favourable_activity"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="@color/buy_num_text"
+            android:gravity="center"
+            android:text="@string/favourable_activity"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_50"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/layout_one"
+                layout="@layout/layout_select_item" />
+
+            <include
+                android:id="@+id/layout_two"
+                layout="@layout/layout_select_right_item" />
+
+            <include
+                android:id="@+id/layout_three"
+                layout="@layout/layout_select_normal_item" />
+
+            <include
+                android:id="@+id/layout_four"
+                layout="@layout/layout_select_normal_item" />
+
+            <include
+                android:id="@+id/layout_five"
+                layout="@layout/layout_select_normal_item" />
+
+            <include
+                android:id="@+id/layout_six"
+                layout="@layout/layout_select_normal_finish_item" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40">
+
+            <ImageView
+                android:id="@+id/iv_white_ice_cream"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_200"
+                android:src="@mipmap/white_ice_cream" />
+
+            <TextView
+                android:id="@+id/tv_select_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_white_ice_cream"
+                android:paddingTop="@dimen/dp_20"
+                android:text="@string/seclect_number"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+
+            <ImageView
+                android:id="@+id/iv_one"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@id/tv_select_number"
+                android:layout_toRightOf="@id/iv_white_ice_cream"
+                android:paddingTop="@dimen/dp_10"
+                android:src="@drawable/black_one" />
+
+            <ImageView
+                android:id="@+id/iv_two"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@id/tv_select_number"
+                android:layout_toRightOf="@id/iv_one"
+                android:paddingTop="@dimen/dp_10"
+                android:src="@drawable/black_two" />
+
+            <ImageView
+                android:id="@+id/iv_three"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@id/tv_select_number"
+                android:layout_toRightOf="@id/iv_two"
+                android:paddingTop="@dimen/dp_10"
+                android:src="@drawable/black_three" />
+
+            <ImageView
+                android:id="@+id/iv_four"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@id/tv_select_number"
+                android:layout_toRightOf="@id/iv_three"
+                android:paddingTop="@dimen/dp_10"
+                android:src="@drawable/black_four" />
+
+            <ImageView
+                android:id="@+id/iv_five"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_below="@id/tv_select_number"
+                android:layout_toRightOf="@id/iv_four"
+                android:paddingTop="@dimen/dp_10"
+                android:src="@drawable/black_five" />
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_two"
+                android:layout_toRightOf="@id/iv_white_ice_cream"
+                android:paddingLeft="@dimen/dp_50"
+                android:text="@string/amount_of_total"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_total"
+                android:layout_toRightOf="@id/iv_white_ice_cream"
+                android:paddingLeft="@dimen/dp_100"
+                android:text="¥ 0.0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/tv_original_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_total_price"
+                android:layout_below="@id/tv_total"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_toRightOf="@id/tv_total_price"
+                android:text="原价:¥ 0.0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_60"
+                android:layout_below="@id/tv_total_price"
+                android:layout_toRightOf="@id/iv_white_ice_cream"
+                android:background="@drawable/select_num_confirm"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_60"
+                android:layout_below="@id/tv_original_price"
+                android:layout_toRightOf="@id/tv_cancel"
+                android:background="@drawable/select_num_confirm"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/black" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/safety_mark" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

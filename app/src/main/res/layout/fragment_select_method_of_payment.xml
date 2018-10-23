@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/buy_bg"
+        android:clickable="true"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_50"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/layout_one"
+                layout="@layout/layout_select_item" />
+
+            <include
+                android:id="@+id/layout_two"
+                layout="@layout/layout_select_right_item" />
+
+            <include
+                android:id="@+id/layout_three"
+                layout="@layout/layout_select_right_item" />
+
+            <include
+                android:id="@+id/layout_four"
+                layout="@layout/layout_select_normal_item" />
+
+            <include
+                android:id="@+id/layout_five"
+                layout="@layout/layout_select_normal_item" />
+
+            <include
+                android:id="@+id/layout_six"
+                layout="@layout/layout_select_normal_finish_item" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40">
+
+            <ImageView
+                android:id="@+id/iv_pay_qr_code"
+                android:layout_width="@dimen/dp_250"
+                android:layout_height="@dimen/dp_250"
+                android:background="@drawable/qr_code_bg"
+                android:scaleType="center"
+                android:src="@drawable/test_code" />
+
+            <TextView
+                android:id="@+id/tv_select_scanning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_pay_qr_code"
+                android:paddingTop="@dimen/dp_20"
+                android:text="@string/please_pay_by_scanning_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/tv_open_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_select_scanning"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_toRightOf="@id/iv_pay_qr_code"
+                android:text="@string/please_select_payment_software_one"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+
+            <LinearLayout
+                android:id="@+id/ll_ali_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_open_camera"
+                android:layout_toRightOf="@id/iv_pay_qr_code"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_ali_pay"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:src="@drawable/ali_pay_selected" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ali_pay"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+
+                <ImageView
+                    android:id="@+id/iv_is_selected"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:src="@drawable/isselected" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_wechat_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_open_camera"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_toRightOf="@id/ll_ali_pay"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_wechat_pay"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:src="@drawable/wechat_pay_selected" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wechat"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+
+                <ImageView
+                    android:id="@+id/iv_is_normal"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:src="@drawable/isnormal" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_60"
+                android:layout_below="@id/ll_wechat_pay"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_toRightOf="@id/iv_pay_qr_code"
+                android:background="@drawable/select_num_confirm"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:layout_below="@id/tv_cancel"
+                android:scaleType="fitXY"
+                android:src="@drawable/advertising" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

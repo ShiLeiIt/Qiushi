@@ -153,4 +153,6 @@
     <color name="black">#000000</color><!--黑色 -->
 
     <color name="login_text">#00e2ff</color>
+    <color name="buy_num_text">#054249</color>
+    <color name="select_text">#35c8db</color>
 </resources>
