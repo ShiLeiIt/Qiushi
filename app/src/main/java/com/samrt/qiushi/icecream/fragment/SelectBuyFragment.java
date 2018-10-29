@@ -34,8 +34,6 @@ public class SelectBuyFragment extends Fragment {
     ImageView mIvEighteen;
     @Bind(R.id.iv_twenty)
     ImageView mIvTwenty;
-    @Bind(R.id.iv_pickup_code_entrance)
-    ImageView mIvPickupCodeEntrance;
     private View mSelectBuyView;
 
     @Nullable
@@ -50,7 +48,7 @@ public class SelectBuyFragment extends Fragment {
 
     private void init() {
         Drawable cow = getResources().getDrawable(R.drawable.cow);//账号
-        cow.setBounds(0, 0, 80, 100);
+        cow.setBounds(0, 0, 100, 120);
         mTvSelectLike.setCompoundDrawables(null, null, cow, null);
         TextView tvNum = (TextView) mSelectBuyView.findViewById(R.id.layout_two).findViewById(R.id.tv_select);//选择数量
         tvNum.setText(R.string.choose_number);
@@ -92,9 +90,4 @@ public class SelectBuyFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.iv_pickup_code_entrance)
-    public void onViewClicked() {
-        //取货码入口(提取)
-
-    }
 }

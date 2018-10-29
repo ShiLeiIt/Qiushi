@@ -50,9 +50,9 @@ public class SelectClickMakingFragment extends Fragment implements View.OnClickL
 
 
         TextView tvPlease = (TextView) mMakingView.findViewById(R.id.tv_please_do_not_go_away);
-        tvPlease.setText(getResources().getString(R.string.please_do_not_go_away) + "\n" +"\n"+
-                getResources().getString(R.string.take_you_selected_tap) + "\n" +"\n"+
-                getResources().getString(R.string.aligning_outlet) + "\n" +"\n"+
+        tvPlease.setText(getResources().getString(R.string.please_do_not_go_away) + "\n" +
+                getResources().getString(R.string.take_you_selected_tap) + "\n" +
+                getResources().getString(R.string.aligning_outlet) + "\n" +
                 getResources().getString(R.string.slowly_rotating)
         );
         TextView tvConfirm = (TextView) mMakingView.findViewById(R.id.tv_confirm);
