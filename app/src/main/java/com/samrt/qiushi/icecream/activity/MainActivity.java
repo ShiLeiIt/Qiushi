@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samrt.qiushi.icecream.R;
+import com.samrt.qiushi.icecream.fragment.BusinessManagementFragment;
 import com.samrt.qiushi.icecream.fragment.LoginFragment;
 import com.samrt.qiushi.icecream.fragment.SelectBuyFragment;
 import com.samrt.qiushi.icecream.fragment.SelectBuyNumFragment;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
     private SelectClickMakingFragment mClickMakingFragment;
     private SelectStartMakingFragment mStartMakingFragment;
     private String totalPrice;
+    private BusinessManagementFragment mBusinessManagementFragment;
 
 
     @Override
@@ -154,6 +156,15 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
                 break;
             case 7://制作完成
                 break;
+            case 8://登录商家管理页面
+                if (mBusinessManagementFragment != null) {
+                    mTransaction.show(mBusinessManagementFragment);
+                } else {
+                    mBusinessManagementFragment = new BusinessManagementFragment();
+                    mTransaction.add(R.id.fragment_buy, mBusinessManagementFragment);
+                }
+
+                break;
         }
         mTransaction.commit();
 
@@ -178,6 +189,9 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
         }
         if (mStartMakingFragment != null) {
             transaction.hide(mStartMakingFragment);
+        }
+        if (mBusinessManagementFragment != null) {
+            transaction.hide(mBusinessManagementFragment);
         }
     }
 

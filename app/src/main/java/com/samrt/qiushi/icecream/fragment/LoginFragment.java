@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samrt.qiushi.icecream.R;
+import com.samrt.qiushi.icecream.activity.MainActivity;
 
 /**
  * Created by shilei on 2018/10/12
@@ -82,6 +83,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getActivity(), "登录", Toast.LENGTH_SHORT).show();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showFragment(8);
+
     }
 }

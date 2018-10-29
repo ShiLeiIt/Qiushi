@@ -36,5 +36,17 @@
     <string name="start_making_in">开始制作中.....</string>
     <string name="surprise_is_waiting_for_you">惊喜在等待您</string>
 
+    <!--商家管理页面-->
+    <string name="management_refrigeration">制冷</string>
+    <string name="management_fresh">保鲜</string>
+    <string name="management_cleaning">清洗</string>
+    <string name="management_standby">待机</string>
+    <string name="management_thaw">解冻</string>
+    <string name="management_pasteurization">巴氏杀菌</string>
+    <string name="management_regeneration">再生</string>
+    <string name="management_heavy_operation">重操作</string>
+    <string name="management_automatic_discharging">自动出料</string>
+    <string name="to_receive">领取</string>
+
 
 </resources>
