@@ -112,6 +112,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/iv_input_fetch_code"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_100"
                 android:layout_alignParentBottom="true"

@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.fragment.BusinessManagementFragment;
+import com.samrt.qiushi.icecream.fragment.CodeClickMakingFragment;
+import com.samrt.qiushi.icecream.fragment.CodeStartMakingFragment;
+import com.samrt.qiushi.icecream.fragment.InputFetchCodeFragment;
 import com.samrt.qiushi.icecream.fragment.LoginFragment;
 import com.samrt.qiushi.icecream.fragment.SelectBuyFragment;
 import com.samrt.qiushi.icecream.fragment.SelectBuyNumFragment;
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
     private SelectStartMakingFragment mStartMakingFragment;
     private String totalPrice;
     private BusinessManagementFragment mBusinessManagementFragment;
+    private InputFetchCodeFragment mInputFetchCodeFragment;
+    private CodeClickMakingFragment mCodeClickMakingFragment;
+    private CodeStartMakingFragment mCodeStartMakingFragment;
 
 
     @Override
@@ -163,7 +169,31 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
                     mBusinessManagementFragment = new BusinessManagementFragment();
                     mTransaction.add(R.id.fragment_buy, mBusinessManagementFragment);
                 }
+                break;
+            case 9://取货码
+                if (mInputFetchCodeFragment != null) {
+                    mTransaction.show(mInputFetchCodeFragment);
+                } else {
+                    mInputFetchCodeFragment = new InputFetchCodeFragment();
+                    mTransaction.add(R.id.fragment_buy, mInputFetchCodeFragment);
+                }
+                break;
+            case 10://通过取货码点击制作
+                if (mCodeClickMakingFragment != null) {
+                    mTransaction.show(mCodeClickMakingFragment);
+                } else {
+                    mCodeClickMakingFragment = new CodeClickMakingFragment();
+                    mTransaction.add(R.id.fragment_buy, mCodeClickMakingFragment);
+                }
 
+                break;
+            case 11://通过取货码开始制作
+                if (mCodeStartMakingFragment != null) {
+                    mTransaction.show(mCodeStartMakingFragment);
+                }else{
+                    mCodeStartMakingFragment = new CodeStartMakingFragment();
+                    mTransaction.add(R.id.fragment_buy, mCodeStartMakingFragment);
+                }
                 break;
         }
         mTransaction.commit();
@@ -192,6 +222,15 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
         }
         if (mBusinessManagementFragment != null) {
             transaction.hide(mBusinessManagementFragment);
+        }
+        if (mInputFetchCodeFragment != null) {
+            transaction.hide(mInputFetchCodeFragment);
+        }
+        if (mCodeClickMakingFragment != null) {
+            transaction.hide(mCodeClickMakingFragment);
+        }
+        if (mCodeStartMakingFragment != null) {
+            transaction.hide(mCodeStartMakingFragment);
         }
     }
 

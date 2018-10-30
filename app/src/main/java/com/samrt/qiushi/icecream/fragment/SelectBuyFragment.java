@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * 购买产品页面
  */
 
-public class SelectBuyFragment extends Fragment {
+public class SelectBuyFragment extends Fragment implements View.OnClickListener {
 
     @Bind(R.id.tv_select_like)
     TextView mTvSelectLike;
@@ -64,6 +64,11 @@ public class SelectBuyFragment extends Fragment {
         tvStartMaking.setText(R.string.start_making);
         TextView tvMakingFinsh = (TextView) mSelectBuyView.findViewById(R.id.layout_six).findViewById(R.id.tv_select);//制作完成
         tvMakingFinsh.setText(R.string.making_finish);
+
+
+        //点击取货码
+        ImageView ivInputFetchCode = (ImageView) mSelectBuyView.findViewById(R.id.iv_input_fetch_code);
+        ivInputFetchCode.setOnClickListener(this);
     }
 
     @Override
@@ -90,4 +95,9 @@ public class SelectBuyFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showFragment(9);
+    }
 }

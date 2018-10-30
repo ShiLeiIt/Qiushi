@@ -47,6 +47,7 @@
     <string name="management_heavy_operation">重操作</string>
     <string name="management_automatic_discharging">自动出料</string>
     <string name="to_receive">领取</string>
+    <string name="input_fetch_code">输入取货码</string>
 
 
 </resources>

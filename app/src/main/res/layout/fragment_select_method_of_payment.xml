@@ -126,7 +126,7 @@
                     android:id="@+id/iv_wechat_pay"
                     android:layout_width="@dimen/dp_100"
                     android:layout_height="@dimen/dp_100"
-                    android:src="@drawable/wechat_pay_selected" />
+                    android:src="@drawable/wechat_pay_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"

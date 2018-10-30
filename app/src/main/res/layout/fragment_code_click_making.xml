@@ -2,22 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/buy_bg"
-    android:layout_height="match_parent">
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_50"
             android:layout_marginRight="@dimen/dp_50"
             android:layout_marginTop="@dimen/dp_50"
@@ -33,41 +31,34 @@
 
             <include
                 android:id="@+id/layout_three"
-                layout="@layout/layout_select_right_item" />
-
-            <include
-                android:id="@+id/layout_four"
-                layout="@layout/layout_select_right_item" />
-
-            <include
-                android:id="@+id/layout_five"
-                layout="@layout/layout_select_right_item" />
+                layout="@layout/layout_select_normal_item" />
 
             <include
                 android:id="@+id/layout_six"
                 layout="@layout/layout_select_normal_finish_item" />
-        </LinearLayout>
 
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+           android:gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_40"
             android:layout_marginRight="@dimen/dp_40">
 
             <ImageView
-                android:id="@+id/iv_start_making"
+                android:id="@+id/iv_making"
                 android:layout_width="@dimen/dp_200"
                 android:layout_height="@dimen/dp_200"
-                android:scaleType="fitXY"
-                android:src="@drawable/gif_ice_cream" />
+                android:src="@drawable/making_ice_cream" />
 
 
             <LinearLayout
                 android:id="@+id/ll_num"
                 android:layout_width="@dimen/dp_200"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_start_making"
+                android:layout_below="@id/iv_making"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -94,37 +85,38 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_start_making"
+                android:id="@+id/tv_confirm"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_toRightOf="@id/iv_making"
+                android:background="@drawable/select_num_confirm"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_please_do_not_go_away"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_confirm"
                 android:layout_marginLeft="@dimen/dp_50"
-                android:layout_marginTop="@dimen/dp_30"
-                android:layout_toRightOf="@id/iv_start_making"
-                android:text="@string/start_making_in"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_20" />
-
-            <TextView
-                android:id="@+id/tv_surprise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_start_making"
-                android:layout_marginLeft="@dimen/dp_50"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_toRightOf="@id/iv_start_making"
-                android:text="@string/surprise_is_waiting_for_you"
+                android:layout_toRightOf="@id/iv_making"
+                android:text="@string/please_do_not_go_away"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
 
         </RelativeLayout>
 
     </LinearLayout>
+
     <ImageView
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/dp_10"
         android:scaleType="fitXY"
         android:src="@drawable/advertising" />
+
 </RelativeLayout>
