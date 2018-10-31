@@ -35,6 +35,11 @@
 
     <string name="start_making_in">开始制作中.....</string>
     <string name="surprise_is_waiting_for_you">惊喜在等待您</string>
+    <string name="deal_finish">交易完成!</string>
+    <string name="everyone_master">人人都是冰淇淋大师</string>
+
+
+
 
     <!--商家管理页面-->
     <string name="management_refrigeration">制冷</string>
