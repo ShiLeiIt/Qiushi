@@ -2,6 +2,8 @@ package com.samrt.qiushi.icecream.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,8 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.samrt.qiushi.icecream.Api.ApiService;
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.activity.MainActivity;
+import com.samrt.qiushi.icecream.model.ProductBean;
+import com.samrt.qiushi.icecream.model.QrCodeBean;
+import com.samrt.qiushi.icecream.utils.LogUtil;
+import com.samrt.qiushi.icecream.utils.ZXingUtils;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by shilei on 2018/10/16
@@ -30,6 +44,10 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
     private ImageView mIvIsNormal;
     private TextView mTvCancel;
     private MainActivity mActivity;
+
+    public ApiService mApiService;
+    private Retrofit mRetrofit;
+    private ImageView mIvPayQrCode;
 
     @Nullable
     @Override
@@ -72,15 +90,25 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
 
         mTvCancel = (TextView) mPaymentView.findViewById(R.id.tv_cancel);
         mActivity = (MainActivity) getActivity();
-        ImageView ivPayQrCode = (ImageView) mPaymentView.findViewById(R.id.iv_pay_qr_code);//二维码点击测试
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(ApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //请求微信二维码
+        getCodeUrl(mActivity.getTotalPrice());
+
+
+        //二维码点击测试
+        mIvPayQrCode = (ImageView) mPaymentView.findViewById(R.id.iv_pay_qr_code);
 
         mLlAliPay.setOnClickListener(this);
         mLlWechatPay.setOnClickListener(this);
         mTvCancel.setOnClickListener(this);
 
-        ivPayQrCode.setOnClickListener(this);
+        mIvPayQrCode.setOnClickListener(this);
         String totalPrice = mActivity.getTotalPrice();
-        Toast.makeText(mActivity, "值：==" + totalPrice, Toast.LENGTH_SHORT).show();
+        LogUtil.d("totalprice======", totalPrice);
     }
 
     @Override
@@ -89,8 +117,50 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         String totalPrice = activity.getTotalPrice();
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            Toast.makeText(mActivity, "值：==" + totalPrice, Toast.LENGTH_SHORT).show();
+            LogUtil.d("totalprice1======", totalPrice);
+            getCodeUrl(totalPrice);
         }
+
+
+    }
+
+
+    public void getCodeUrl(String totalPrice) {
+        int selectNum = mActivity.getSelectNum();
+        LogUtil.d("num===", selectNum + "");
+        LogUtil.d("name=====", mActivity.getProductName() + "");
+        LogUtil.d("price======", mActivity.getPrice() + "");
+
+        ProductBean productBean = new ProductBean();
+        productBean.setPrice(mActivity.getPrice());
+        productBean.setName(mActivity.getProductName());
+        productBean.setNum(mActivity.getSelectNum());
+        productBean.setAmount(Double.parseDouble(totalPrice));
+        String s = new Gson().toJson(productBean);
+        LogUtil.d("json======", s);
+        mApiService = mRetrofit.create(ApiService.class);
+        mApiService.getWeChatCode("sn", totalPrice, s, "1222", "19837e4d1739579b41f5a76de9b555c8").enqueue(new Callback<QrCodeBean>() {
+            @Override
+            public void onResponse(Call<QrCodeBean> call, Response<QrCodeBean> response) {
+                LogUtil.d("code======", response.body().getCode() + "");
+                LogUtil.d("msg======", response.body().getMsg());
+
+                if (response.body().getCode() == 200 && response.body().getData() != null) {
+                    //微信二维码地址
+                    String code_url = response.body().getData().getCode_url();
+                    Bitmap bitmap = ZXingUtils.createQRImage(code_url, 300, 300);
+                    mIvPayQrCode.setImageBitmap(bitmap);
+                    LogUtil.d("codeUrl======", code_url);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<QrCodeBean> call, Throwable t) {
+                LogUtil.d("请求失败信息======", t.getMessage());
+            }
+        });
+
 
     }
 
@@ -110,7 +180,9 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
                 mIvIsNormal.setImageDrawable(getResources().getDrawable(R.drawable.isselected));
                 break;
             case R.id.tv_cancel:
+                mActivity.setTotalPrice(0 + "");
                 mActivity.showFragment(3);
+
                 break;
             case R.id.iv_pay_qr_code:
                 mActivity.showFragment(5);

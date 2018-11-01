@@ -6,19 +6,20 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.samrt.qiushi.icecream.Api.ApiService;
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.activity.MainActivity;
 
 import java.math.BigDecimal;
+
+import retrofit2.Retrofit;
 
 /**
  * Created by shilei on 2018/10/12
@@ -34,12 +35,14 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
     private ImageView mIvFour;
     private ImageView mIvFive;
     private TextView mTvOriginalPrice;
-    private String mPrice;
+    private Double mPrice;
     private TextView mTvCancel;
     private TextView mTvConfirm;
-    private String mPrice1;
+    private Double mPrice1;
     private TextView mTvTotalPrice;
-    private double mNumber;
+    private int mNumber;
+    public ApiService mApiService;
+    private Retrofit mRetrofit;
 
 
     @Nullable
@@ -76,9 +79,9 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
 
         MainActivity activity = (MainActivity) getActivity();
         mPrice = activity.getPrice();
-        if (mPrice.equals("15")) {
+        if (mPrice == 15.0) {
             System.out.println("pirce===15" + mPrice);
-        } else if (mPrice.equals("18")) {
+        } else if (mPrice == 18.0) {
             System.out.println("pirce===18" + mPrice);
         } else {
             System.out.println("pirce===20" + mPrice);
@@ -106,6 +109,16 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
         mTvConfirm.setOnClickListener(this);//确认
 
 
+        activity.setTotalPrice(String.valueOf(mul(1.0, activity.getPrice())));
+        mTvOriginalPrice.setText("原价¥：" + activity.getPrice());
+        mTvTotalPrice.setText("¥:" + sub(activity.getPrice(), 10.0));
+        activity.setSelectNum(1);
+        mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.white_one));
+        mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
+        mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
+        mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
+        mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
+
     }
 
     @Override
@@ -114,26 +127,18 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
         mPrice1 = activity.getPrice();
         super.onHiddenChanged(hidden);
         if (!hidden) {
-
-//            if (mPrice1.equals("15")) {
-//                System.out.println("pirce===15" + mPrice1);
-//            } else if (mPrice1.equals("18")) {
-//                System.out.println("pirce===18" + mPrice1);
-//            } else {
-//                System.out.println("pirce===20" + mPrice1);
-//            }
             // 返回之后重新设置值
-            activity.setTotalPrice(String.valueOf(mul(1.0, Double.valueOf(mPrice1))));
+            activity.setTotalPrice(String.valueOf(mul(1.0, mPrice1)));
             mTvOriginalPrice.setText("原价¥：" + mPrice1);
-            mTvTotalPrice.setText("¥:" + sub(Double.valueOf(mPrice1), 10.0));
-        } else {
+            mTvTotalPrice.setText("¥:" + sub(mPrice1, 10.0));
+            activity.setSelectNum(1);
             mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.white_one));
             mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
             mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
             mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
             mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
-
         }
+
 
     }
 
@@ -146,86 +151,90 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        MainActivity activity = (MainActivity) getActivity();
-        String price = activity.getPrice();
+        final MainActivity activity = (MainActivity) getActivity();
+        Double price = activity.getPrice();
         switch (v.getId()) {
             case R.id.iv_one:
-                mNumber = 1.0;
+                mNumber = 1;
                 mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.white_one));
                 mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
                 mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
                 mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
                 mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
-                if (!price.isEmpty()) {
-                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(1.0, Double.valueOf(price))));
+                if (price != 0.0) {
+                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(1.0, price)));
                 }
-                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(1.0, Double.valueOf(price)), 10.0)));
-                activity.setTotalPrice(String.valueOf(mul(1.0, Double.valueOf(price))));
+                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(1.0, price), 10.0)));
+                activity.setTotalPrice(String.valueOf(mul(1.0, price)));
+                activity.setSelectNum((int) mNumber);
 
                 break;
             case R.id.iv_two:
-                mNumber = 2.0;
+                mNumber = 2;
                 mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.white_two));
                 mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.black_one));
                 mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
                 mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
                 mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
-                if (!price.isEmpty()) {
-                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(2.0, Double.valueOf(price))));
+                if (price != 0.0) {
+                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(2.0, price)));
                 }
                 //设置活动价格
-                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(2.0, Double.valueOf(price)), 10.0)));
+                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(2.0, price), 20.0)));
                 //设置总价格
-                activity.setTotalPrice(String.valueOf(mul(2.0, Double.valueOf(price))));
+                activity.setTotalPrice(String.valueOf(mul(2.0, price)));
+                activity.setSelectNum((int) mNumber);
                 break;
             case R.id.iv_three:
-                mNumber = 3.0;
+                mNumber = 3;
                 mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.white_three));
                 mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.black_one));
                 mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
                 mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
                 mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
-                if (!mPrice.isEmpty()) {
+                if (price != 0.0) {
                     mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(3.0, Double.valueOf(price))));
                 }
-                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(3.0, Double.valueOf(price)), 10.0)));
+                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(3.0, price), 30.0)));
                 activity.setTotalPrice(String.valueOf(mul(3.0, Double.valueOf(price))));
+                activity.setSelectNum((int) mNumber);
                 break;
             case R.id.iv_four:
-                mNumber = 4.0;
+                mNumber = 4;
                 mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.white_four));
                 mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.black_one));
                 mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
                 mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
                 mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.black_five));
-                if (!mPrice.isEmpty()) {
-                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(4.0, Double.valueOf(price))));
+                if (price != 0.0) {
+                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(4.0, price)));
                 }
-                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(4.0, Double.valueOf(price)), 10.0)));
+                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(4.0, Double.valueOf(price)), 40.0)));
                 activity.setTotalPrice(String.valueOf(mul(4.0, Double.valueOf(price))));
+                activity.setSelectNum((int) mNumber);
                 break;
             case R.id.iv_five:
-                mNumber = 5.0;
+                mNumber = 5;
                 mIvFive.setImageDrawable(getResources().getDrawable(R.drawable.white_five));
                 mIvOne.setImageDrawable(getResources().getDrawable(R.drawable.black_one));
                 mIvTwo.setImageDrawable(getResources().getDrawable(R.drawable.black_two));
                 mIvThree.setImageDrawable(getResources().getDrawable(R.drawable.black_three));
                 mIvFour.setImageDrawable(getResources().getDrawable(R.drawable.black_four));
-                if (!mPrice.isEmpty()) {
-                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(5.0, Double.valueOf(price))));
+                if (price != 0.0) {
+                    mTvOriginalPrice.setText("原价¥：" + String.valueOf(mul(5.0, price)));
                 }
-                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(5.0, Double.valueOf(price)), 10.0)));
+                mTvTotalPrice.setText("¥:" + String.valueOf(sub(mul(5.0, Double.valueOf(price)), 50.0)));
                 activity.setTotalPrice(String.valueOf(mul(5.0, Double.valueOf(price))));
+                activity.setSelectNum((int) mNumber);
                 break;
             case R.id.tv_cancel:
                 activity.showFragment(1);
                 break;
             case R.id.tv_confirm:
-                if (!mTvOriginalPrice.getText().toString().equals("原价:¥ 0.0") || !mTvTotalPrice.getText().toString().equals("¥ 0.0")) {
-                    activity.showFragment(4);
-                } else {
-                    Toast.makeText(activity, "请选择个数", Toast.LENGTH_SHORT).show();
-                }
+
+                //支付付款页面
+//                if (!mTvOriginalPrice.getText().toString().equals("原价:¥ 0.0") || !mTvTotalPrice.getText().toString().equals("¥ 0.0")) {
+                activity.showFragment(4);
 
                 break;
         }

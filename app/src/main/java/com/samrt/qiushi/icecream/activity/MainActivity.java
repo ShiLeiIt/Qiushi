@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
     private FragmentTransaction mTransaction;
     private LoginFragment mLoginFragment;
     private SelectBuyNumFragment mSelectBuyNumFragment;
-    private String price;
+    private double price;
     private SelectPaymentFragment mPaymentFragment;
     private SelectClickMakingFragment mClickMakingFragment;
     private SelectStartMakingFragment mStartMakingFragment;
@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
     private InputFetchCodeFragment mInputFetchCodeFragment;
     private CodeClickMakingFragment mCodeClickMakingFragment;
     private CodeStartMakingFragment mCodeStartMakingFragment;
+
+    private int selectNum;//选择冰淇淋个数
+
+    private String productName;//冰淇淋名称
 
 
     @Override
@@ -190,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
             case 11://通过取货码开始制作
                 if (mCodeStartMakingFragment != null) {
                     mTransaction.show(mCodeStartMakingFragment);
-                }else{
+                } else {
                     mCodeStartMakingFragment = new CodeStartMakingFragment();
                     mTransaction.add(R.id.fragment_buy, mCodeStartMakingFragment);
                 }
@@ -234,11 +238,11 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
         }
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -249,5 +253,22 @@ public class MainActivity extends AppCompatActivity implements OnBannerListener 
 
     public void setTotalPrice(String totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getSelectNum() {
+        return selectNum;
+    }
+
+    public void setSelectNum(int selectNum) {
+        this.selectNum = selectNum;
+    }
+
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

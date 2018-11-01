@@ -65,7 +65,6 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
         TextView tvMakingFinsh = (TextView) mSelectBuyView.findViewById(R.id.layout_six).findViewById(R.id.tv_select);//制作完成
         tvMakingFinsh.setText(R.string.making_finish);
 
-
         //点击取货码
         ImageView ivInputFetchCode = (ImageView) mSelectBuyView.findViewById(R.id.iv_input_fetch_code);
         ivInputFetchCode.setOnClickListener(this);
@@ -82,13 +81,16 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
         MainActivity activity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.iv_fifteen:
-                activity.setPrice("15");
+                activity.setPrice(15.0);
+                activity.setProductName("郁金香雪吻");
                 break;
             case R.id.iv_eighteen:
-                activity.setPrice("18");
+                activity.setPrice(18.0);
+                activity.setProductName("格罗宁根黑松");
                 break;
             case R.id.iv_twenty:
-                activity.setPrice("20");
+                activity.setPrice(20.0);
+                activity.setProductName("海牙圣杯");
                 break;
         }
         activity.showFragment(3);
