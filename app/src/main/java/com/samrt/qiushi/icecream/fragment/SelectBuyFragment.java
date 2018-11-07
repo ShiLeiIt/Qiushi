@@ -12,12 +12,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.samrt.qiushi.icecream.Api.ApiService;
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.activity.MainActivity;
+import com.samrt.qiushi.icecream.model.ProductInfoBean;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by shilei on 2018/10/12
@@ -35,6 +45,10 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
     @Bind(R.id.iv_twenty)
     ImageView mIvTwenty;
     private View mSelectBuyView;
+    private Retrofit mRetrofit;
+    private ApiService mApiService;
+    private String mProductImg;
+    private List<ProductInfoBean.DataBean.ProductBean> mProductBeans;
 
     @Nullable
     @Override
@@ -43,6 +57,7 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
         mSelectBuyView = inflater.inflate(R.layout.fragment_select_buy, container, false);
         ButterKnife.bind(this, mSelectBuyView);
         init();
+
         return mSelectBuyView;
     }
 
@@ -68,6 +83,14 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
         //点击取货码
         ImageView ivInputFetchCode = (ImageView) mSelectBuyView.findViewById(R.id.iv_input_fetch_code);
         ivInputFetchCode.setOnClickListener(this);
+
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(ApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getProductInfo();
+
+
     }
 
     @Override
@@ -76,21 +99,45 @@ public class SelectBuyFragment extends Fragment implements View.OnClickListener 
         ButterKnife.unbind(this);
     }
 
+    private void getProductInfo() {
+        mApiService = mRetrofit.create(ApiService.class);
+        mApiService.getProductInfo(1, "19837e4d1739579b41f5a76de9b555c8", "abc").enqueue(new Callback<ProductInfoBean>() {
+            @Override
+            public void onResponse(Call<ProductInfoBean> call, Response<ProductInfoBean> response) {
+                mProductBeans = response.body().getData().getProduct();
+                Glide.with(getActivity()).load(mProductBeans.get(0).getImg()).into(mIvFifteen);
+                Glide.with(getActivity()).load(mProductBeans.get(1).getImg()).into(mIvEighteen);
+                Glide.with(getActivity()).load(mProductBeans.get(2).getImg()).into(mIvTwenty);
+            }
+
+            @Override
+            public void onFailure(Call<ProductInfoBean> call, Throwable throwable) {
+                String message = throwable.getMessage();
+            }
+        });
+    }
+
     @OnClick({R.id.iv_fifteen, R.id.iv_eighteen, R.id.iv_twenty})
     public void onViewClicked(View view) {
         MainActivity activity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.iv_fifteen:
-                activity.setPrice(15.0);
-                activity.setProductName("郁金香雪吻");
+                if (mProductBeans != null) {
+                    activity.setPrice(mProductBeans.get(0).getPrice());
+                    activity.setProductName(mProductBeans.get(0).getName());
+                }
                 break;
             case R.id.iv_eighteen:
-                activity.setPrice(18.0);
-                activity.setProductName("格罗宁根黑松");
+                if (mProductBeans != null) {
+                    activity.setPrice(mProductBeans.get(1).getPrice());
+                    activity.setProductName(mProductBeans.get(1).getName());
+                }
                 break;
             case R.id.iv_twenty:
-                activity.setPrice(20.0);
-                activity.setProductName("海牙圣杯");
+                if (mProductBeans != null) {
+                    activity.setPrice(mProductBeans.get(2).getPrice());
+                    activity.setProductName(mProductBeans.get(2).getName());
+                }
                 break;
         }
         activity.showFragment(3);

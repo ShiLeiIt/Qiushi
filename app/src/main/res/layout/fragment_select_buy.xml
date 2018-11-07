@@ -90,7 +90,7 @@
                     android:layout_height="@dimen/dp_150"
                     android:layout_below="@id/iv_circle_ice_cream"
                     android:layout_weight="1"
-                    android:src="@drawable/fifteen" />
+                     />
 
                 <ImageView
                     android:id="@+id/iv_eighteen"
@@ -99,7 +99,7 @@
                     android:layout_below="@id/iv_circle_ice_cream"
                     android:layout_toRightOf="@id/iv_fifteen"
                     android:layout_weight="1"
-                    android:src="@drawable/eighteen" />
+                     />
 
                 <ImageView
                     android:id="@+id/iv_twenty"
@@ -108,7 +108,7 @@
                     android:layout_below="@id/iv_circle_ice_cream"
                     android:layout_toRightOf="@id/iv_eighteen"
                     android:layout_weight="1"
-                    android:src="@drawable/twenty" />
+                     />
             </LinearLayout>
 
             <ImageView

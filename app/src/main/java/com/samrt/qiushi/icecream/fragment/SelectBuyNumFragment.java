@@ -80,11 +80,11 @@ public class SelectBuyNumFragment extends Fragment implements View.OnClickListen
         MainActivity activity = (MainActivity) getActivity();
         mPrice = activity.getPrice();
         if (mPrice == 15.0) {
-            System.out.println("pirce===15" + mPrice);
+            System.out.println("pirce15===" + mPrice);
         } else if (mPrice == 18.0) {
-            System.out.println("pirce===18" + mPrice);
+            System.out.println("pirce18===" + mPrice);
         } else {
-            System.out.println("pirce===20" + mPrice);
+            System.out.println("pirce20===20" + mPrice);
         }
 
         mIvOne = (ImageView) mNumView.findViewById(R.id.iv_one);

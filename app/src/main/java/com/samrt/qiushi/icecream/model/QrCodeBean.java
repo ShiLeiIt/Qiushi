@@ -5,10 +5,11 @@ package com.samrt.qiushi.icecream.model;
  */
 
 public class QrCodeBean {
+
     /**
      * code : 200
-     * msg : successful
-     * data : {"code_url":"weixin://wxpay/bizpayurl?pr=uJ7noS3","order_number":"CrAppMachineNumber20181031141522"}
+     * msg : Get WechatQRcode Successful
+     * data : {"code_url":"weixin://wxpay/bizpayurl?pr=X4Zyvpg","order_number":"TnclM0QlM0Q="}
      */
 
     private int code;
@@ -41,8 +42,8 @@ public class QrCodeBean {
 
     public static class DataBean {
         /**
-         * code_url : weixin://wxpay/bizpayurl?pr=uJ7noS3
-         * order_number : CrAppMachineNumber20181031141522
+         * code_url : weixin://wxpay/bizpayurl?pr=X4Zyvpg
+         * order_number : TnclM0QlM0Q=
          */
 
         private String code_url;

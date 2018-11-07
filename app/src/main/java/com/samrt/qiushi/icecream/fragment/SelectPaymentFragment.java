@@ -5,7 +5,10 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.samrt.qiushi.icecream.Api.ApiService;
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.activity.MainActivity;
+import com.samrt.qiushi.icecream.model.OrderPayBean;
 import com.samrt.qiushi.icecream.model.ProductBean;
 import com.samrt.qiushi.icecream.model.QrCodeBean;
 import com.samrt.qiushi.icecream.utils.LogUtil;
 import com.samrt.qiushi.icecream.utils.ZXingUtils;
+
+import java.io.StringReader;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +57,13 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
     public ApiService mApiService;
     private Retrofit mRetrofit;
     private ImageView mIvPayQrCode;
+    private String mOrderNumber;
+    private Handler mHandler;
+    private Runnable mRunnable;
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+    private static final String TAG = "SelectPaymentFragment";
+
 
     @Nullable
     @Override
@@ -89,6 +105,8 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         mIvIsNormal = (ImageView) mPaymentView.findViewById(R.id.iv_is_normal);
 
         mTvCancel = (TextView) mPaymentView.findViewById(R.id.tv_cancel);
+
+
         mActivity = (MainActivity) getActivity();
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.BASE_URL)
@@ -102,6 +120,7 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         //二维码点击测试
         mIvPayQrCode = (ImageView) mPaymentView.findViewById(R.id.iv_pay_qr_code);
 
+
         mLlAliPay.setOnClickListener(this);
         mLlWechatPay.setOnClickListener(this);
         mTvCancel.setOnClickListener(this);
@@ -109,6 +128,24 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         mIvPayQrCode.setOnClickListener(this);
         String totalPrice = mActivity.getTotalPrice();
         LogUtil.d("totalprice======", totalPrice);
+        //启动定时器
+        mTimer = new Timer();
+        mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                mHandler.sendMessage(message);
+            }
+        };
+        mTimer.schedule(mTimerTask, 1000, 2000);
+    }
+
+    @Override
+    public void onDestroy() {
+        mTimer.cancel();
+        super.onDestroy();
+
     }
 
     @Override
@@ -119,8 +156,21 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         if (!hidden) {
             LogUtil.d("totalprice1======", totalPrice);
             getCodeUrl(totalPrice);
+            //启动定时器
+            mTimer = new Timer();
+            mTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.what = 1;
+                    mHandler.sendMessage(message);
+                }
+            };
+            mTimer.schedule(mTimerTask, 1000, 2000);
+        } else {
+            //取消定时器
+            mTimer.cancel();
         }
-
 
     }
 
@@ -135,24 +185,64 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
         productBean.setPrice(mActivity.getPrice());
         productBean.setName(mActivity.getProductName());
         productBean.setNum(mActivity.getSelectNum());
-        productBean.setAmount(Double.parseDouble(totalPrice));
+//        productBean.setAmount(Double.parseDouble(totalPrice));
+        productBean.setAmount(0.01);
         String s = new Gson().toJson(productBean);
+
+
         LogUtil.d("json======", s);
         mApiService = mRetrofit.create(ApiService.class);
-        mApiService.getWeChatCode("sn", totalPrice, s, "1222", "19837e4d1739579b41f5a76de9b555c8").enqueue(new Callback<QrCodeBean>() {
+        mApiService.getWeChatCode(2, "19837e4d1739579b41f5a76de9b555c8", "zxc", s).enqueue(new Callback<QrCodeBean>() {
+            @SuppressLint("HandlerLeak")
             @Override
-            public void onResponse(Call<QrCodeBean> call, Response<QrCodeBean> response) {
+            public void onResponse(Call<QrCodeBean> call, final Response<QrCodeBean> response) {
                 LogUtil.d("code======", response.body().getCode() + "");
                 LogUtil.d("msg======", response.body().getMsg());
 
                 if (response.body().getCode() == 200 && response.body().getData() != null) {
                     //微信二维码地址
                     String code_url = response.body().getData().getCode_url();
-                    Bitmap bitmap = ZXingUtils.createQRImage(code_url, 300, 300);
+                    Bitmap bitmap = ZXingUtils.createQRImage(code_url, 280, 280);
                     mIvPayQrCode.setImageBitmap(bitmap);
+                    mOrderNumber = response.body().getData().getOrder_number();
                     LogUtil.d("codeUrl======", code_url);
-                }
 
+                    mHandler = new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if (msg.what == 1) {
+                                mApiService.getOrderPayInfo(3, "19837e4d1739579b41f5a76de9b555c8", "qwe", "query", mOrderNumber).enqueue(new retrofit2.Callback<OrderPayBean>() {
+                                    @Override
+                                    public void onResponse(Call<OrderPayBean> call, Response<OrderPayBean> response) {
+                                        LogUtil.d("定时器=====", "++++++++");
+                                        if (response.body().getData() != null) {
+                                            if (response.body().getData().getOrder().getStatus().equals("0")) {
+                                                //一段时间未支付，会跳转到购买页面
+                                                mActivity.showFragment(1);
+                                            } else if (response.body().getData().getOrder().getStatus().equals("1")) {
+                                                //已创建订单但未支付
+                                                LogUtil.d(TAG, "订单创建未支付");
+                                            } else {
+                                                mActivity.showFragment(5);
+                                                mTimer.cancel();
+                                            }
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<OrderPayBean> call, Throwable throwable) {
+                                        Toast.makeText(mActivity, "2222", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            super.handleMessage(msg);
+
+                        }
+                    };
+
+
+                }
             }
 
             @Override
@@ -161,8 +251,8 @@ public class SelectPaymentFragment extends Fragment implements View.OnClickListe
             }
         });
 
-
     }
+
 
     @Override
     public void onClick(View v) {
