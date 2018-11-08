@@ -14,8 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.samrt.qiushi.icecream.Api.ApiService;
 import com.samrt.qiushi.icecream.R;
 import com.samrt.qiushi.icecream.activity.MainActivity;
+import com.samrt.qiushi.icecream.model.LoginBean;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by shilei on 2018/10/12
@@ -28,6 +36,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mEtLoginAccount;
     private EditText mEtLoginPassword;
     private View mLoginView;
+    private Retrofit mRetrofit;
+    private ApiService mApiService;
 
     @Nullable
     @Override
@@ -79,11 +89,36 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
         });
         mTvLogin.setOnClickListener(this);
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(ApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mApiService = mRetrofit.create(ApiService.class);
+
     }
 
     @Override
     public void onClick(View v) {
-        MainActivity activity = (MainActivity) getActivity();
-        activity.showFragment(8);
+        mApiService.getLoginStatus(4, "19837e4d1739579b41f5a76de9b555c8", "1bc", mEtLoginAccount.getText().toString(), mEtLoginPassword.getText().toString()).enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                if (response.body() != null && response.body().getCode() == 200) {
+                    if (response.body().getData().getStatus().equals("SUCCESS")) {
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.showFragment(8);
+                    } else {
+                        Toast.makeText(getActivity(), "登录失败账号或者密码错误", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "请求code错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable throwable) {
+
+            }
+        });
+
     }
 }

@@ -1,5 +1,6 @@
 package com.samrt.qiushi.icecream.Api;
 
+import com.samrt.qiushi.icecream.model.LoginBean;
 import com.samrt.qiushi.icecream.model.OrderPayBean;
 import com.samrt.qiushi.icecream.model.ProductBean;
 import com.samrt.qiushi.icecream.model.ProductInfoBean;
@@ -25,6 +26,9 @@ public interface ApiService {
 
     //订单支付结果查询
     String API_ORDER_PAY_INFO = "order.php";
+
+    //商户登录
+    String API_LOGIN = "login.php";
 
     /**
      * @param sn
@@ -52,5 +56,11 @@ public interface ApiService {
     @POST(API_ORDER_PAY_INFO)
     Call<OrderPayBean> getOrderPayInfo(@Field("wid") int wid, @Field("token") String token, @Field("sn") String sn,
                                        @Field("type") String type, @Field("order_number") String orderNumber);
+
+    @FormUrlEncoded
+    @POST(API_LOGIN)
+    Call<LoginBean> getLoginStatus(@Field("wid") int wid, @Field("token") String token, @Field("sn") String sn,
+                                   @Field("account") String account, @Field("password") String password);
+
 
 }
